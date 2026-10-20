@@ -12,6 +12,7 @@ import { PopupComponent } from '../../pop-up/popup/popup.component';
 import { Sub1Component } from '../../academics/sub1/sub1.component';
 import { SchedSetupComponent } from '../../academics/Besogs/sched-setup/sched-setup.component';
 import { SectionMaintenanceComponent } from '../../academics/Besogs/section-maintenance/section-maintenance.component';
+import { SectionDialogComponent } from '../../academics/Besogs/section-maintenance/section-dialog/section-dialog.component';
 
 @NgModule({
   imports: [
@@ -29,9 +30,11 @@ import { SectionMaintenanceComponent } from '../../academics/Besogs/section-main
     PopupComponent,
     Sub1Component,
     SchedSetupComponent,
-    SectionMaintenanceComponent
+    SectionMaintenanceComponent,
+    SectionDialogComponent
   ],
   entryComponents: [
+    SectionDialogComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
