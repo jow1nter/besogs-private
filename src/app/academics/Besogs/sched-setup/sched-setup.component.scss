@@ -1,0 +1,361 @@
+::ng-deep .mat-card-header {
+    background-color: #294a70 !important;
+    padding: 0px 0px 0px 0px !important;
+    color: white;
+}
+
+::ng-deep .mat-card-header * {
+    color: white;
+}
+
+::ng-deep .mat-card {
+    padding: 0 !important;
+}
+
+::ng-deep .mat-card-content {
+    padding: 5px !important;
+}
+:host {
+    --bg: #ffffff;
+    --tint: #f3f6f1;
+    --tint-strong: #e6eee3;
+    --border: #e4e8e1;
+    --text: #1f2a1f;
+    --muted: #6b7a6b;
+    --faint: #9aa59a;
+    --green: #2f5d3a;
+    --danger: #c0392b;
+    display: block;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text);
+}
+
+.page {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 24px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 500;
+}
+
+.subtitle {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.legend-line {
+    width: 20px;
+    border-top: 2px solid var(--green);
+}
+
+.faint {
+    color: var(--faint);
+    font-size: 0.75rem;
+    margin: 2px 0 0;
+}
+
+/* Tabs */
+.tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--tint);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 12px 16px;
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: var(--bg);
+    border-color: var(--text);
+}
+
+.tab-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.tab.active .tab-title {
+    color: var(--green);
+}
+
+.tab-meta {
+    font-size: 0.7rem;
+    color: var(--faint);
+}
+
+/* Content */
+.content {
+    padding: 20px 24px;
+}
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.section-head h2 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Grade card */
+.grade-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.grade-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--tint-strong);
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.grade-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.grade-info strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.grade-info small {
+    font-size: 0.72rem;
+    color: var(--faint);
+}
+
+.add-btn {
+    background: var(--tint-strong);
+    color: var(--green);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.grade-body {
+    background: #fbfcfa;
+    padding: 0 16px;
+}
+
+.time-row {
+    display: grid;
+    grid-template-columns: 32px 120px 28px 120px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.time-row:last-child {
+    border-bottom: none;
+}
+
+.row-no {
+    font-size: 0.75rem;
+    color: var(--faint);
+}
+
+.time-value {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.to {
+    font-size: 0.75rem;
+    color: var(--faint);
+    text-align: center;
+}
+
+.row-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 4px 6px;
+}
+
+.link-btn:hover {
+    color: var(--green);
+}
+
+.link-btn.danger:hover {
+    color: var(--danger);
+}
+
+.empty {
+    font-size: 0.8rem;
+    color: var(--faint);
+    padding: 14px 0;
+    margin: 0;
+}
+
+/* Buttons */
+.btn {
+    border: 1px solid var(--border);
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+}
+
+/* Modal */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 30, 20, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: var(--bg);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 380px;
+    padding: 20px;
+}
+
+.modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.modal-head h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--faint);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.modal-fields {
+    display: grid;
+    grid-template-columns: 1fr 28px 1fr;
+    gap: 8px;
+    align-items: end;
+}
+
+.modal-fields .to {
+    padding-bottom: 10px;
+}
+
+.time-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.time-field span {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.time-field input {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.875rem;
+}
+
+.modal-error {
+    color: var(--danger);
+    font-size: 0.8rem;
+    margin: 10px 0 0;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 18px;
+}

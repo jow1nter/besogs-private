@@ -1,0 +1,96 @@
+<mat-card class="example-card">
+    <mat-card-header>
+
+        <mat-card-title>
+            <p><b>Schedule Setup</b></p>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <p>
+                This page allows you to setup time for each grade.
+            </p>
+        </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content class='colo'>
+
+        <!-- Tabs -->
+        <nav class="tabs">
+            <button *ngFor="let d of departments" class="tab" [class.active]="d.id === activeDept"
+                (click)="activeDept = d.id">
+                <span class="tab-title">{{ d.name }}</span>
+            </button>
+        </nav>
+
+        <section class="content">
+            <div class="section-head">
+                <div>
+                    <h2>{{ activeDepartment()?.name }}</h2>
+                    <p class="faint">{{ activeDepartment()?.label }}</p>
+                </div>
+                <span class="faint">{{ gradesFor(activeDept).length }} grades</span>
+            </div>
+
+            <!-- Grade cards -->
+            <div class="grade-card" *ngFor="let g of gradesFor(activeDept)">
+                <div class="grade-head">
+                    <div class="badge">{{ g.badge }}</div>
+                    <div class="grade-info">
+                        <strong>{{ g.name }}</strong>
+                        <small>{{ g.blocks.length }} time blocks</small>
+                    </div>
+                    <button class="add-btn" (click)="openAdd(g)">+ Add time</button>
+                </div>
+
+                <div class="grade-body">
+                    <div class="time-row" *ngFor="let b of g.blocks; let i = index">
+                        <span class="row-no">{{ i + 1 }}</span>
+                        <div class="time-value">{{ formatTime(b.start) }}</div>
+                        <span class="to">to</span>
+                        <div class="time-value">{{ formatTime(b.end) }}</div>
+                        <span></span>
+                        <div class="row-actions">
+                            <button class="link-btn" (click)="openEdit(g, i)">Edit</button>
+                            <button class="link-btn danger" (click)="removeTime(g, i)">Remove</button>
+                        </div>
+                    </div>
+
+                    <p class="empty" *ngIf="!g.blocks.length">No time blocks yet.</p>
+                </div>
+            </div>
+        </section>
+    </mat-card-content>
+</mat-card>
+
+
+<!-- Modal -->
+<ng-template #modalTime>
+    <h2 mat-dialog-title>
+        {{ editIndex === -1 ? 'Add time' : 'Edit time' }}
+        <p class="faint">{{ grades[gradeIndex]?.name }}</p>
+    </h2>
+
+    <mat-dialog-content>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <mat-form-field appearance="outline" style="flex: 1; min-width: 0;">
+                <mat-label>Start</mat-label>
+                <input matInput type="time" [(ngModel)]="start" (ngModelChange)="error = ''">
+            </mat-form-field>
+
+            <span style="padding-bottom: 1.3em;">to</span>
+
+            <mat-form-field appearance="outline" style="flex: 1; min-width: 0;">
+                <mat-label>End</mat-label>
+                <input matInput type="time" [(ngModel)]="end" (ngModelChange)="error = ''">
+            </mat-form-field>
+        </div>
+
+        <p class="modal-error" *ngIf="error">{{ error }}</p>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button class="btn" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-primary" (click)="saveTime()">Save</button>
+    </mat-dialog-actions>
+</ng-template>

@@ -10,6 +10,7 @@ import { MatBadgeModule } from '@angular/material';
 import { CustomNumberPipe } from './../../pipes/custom-number.pipe';
 import { PopupComponent } from '../../pop-up/popup/popup.component';
 import { Sub1Component } from '../../academics/sub1/sub1.component';
+import { SchedSetupComponent } from '../../academics/Besogs/sched-setup/sched-setup.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { Sub1Component } from '../../academics/sub1/sub1.component';
     HomeComponent,    
     CustomNumberPipe,
     PopupComponent,
-    Sub1Component
+    Sub1Component,
+    SchedSetupComponent
   ],
   entryComponents: [
   ],
