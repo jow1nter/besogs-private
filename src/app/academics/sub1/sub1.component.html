@@ -1,0 +1,40 @@
+<mat-card class="example-card">
+    <mat-card-header>
+
+        <mat-card-title>
+            <p style="font-size: 14px; padding: 0; margin: 0; padding-top: 5px;"><b>Sub 1</b></p>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <p style="font-size: 12px; padding: 0; margin: 0; margin-bottom: -1em;">
+                This page allows you to manage Sub 1 records.<br>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quod.
+            </p>
+        </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content class='colo'>
+        <table class="apptable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" (click)="editUser(user)">Edit</button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteUser(user)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+</mat-card>

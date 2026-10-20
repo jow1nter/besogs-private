@@ -1,0 +1,17 @@
+::ng-deep .mat-card-header {
+    background-color: #294a70 !important;
+    padding: 0px 0px 0px 0px !important;
+    color: white;
+}
+
+::ng-deep .mat-card-header * {
+    color: white;
+}
+
+::ng-deep .mat-card {
+    padding: 0 !important;
+}
+
+::ng-deep .mat-card-content {
+    padding: 5px !important;
+}

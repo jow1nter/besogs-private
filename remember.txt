@@ -1,0 +1,7 @@
+ng g component evaluation-tools --module app
+
+
+import {Router} from "@angular/router";
+  constructor(private router: Router){
+  	this.router.navigate(['login']);
+  }
