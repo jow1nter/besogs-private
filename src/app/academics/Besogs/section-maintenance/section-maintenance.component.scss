@@ -1,0 +1,18 @@
+:host {
+    display: block;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.mat-card {
+    padding: 0 !important;
+}
+
+.mat-card-header {
+    background-color: #294a70 !important;
+    padding: 0 !important;
+    color: white;
+}
+
+.mat-card-header * {
+    color: white;
+}

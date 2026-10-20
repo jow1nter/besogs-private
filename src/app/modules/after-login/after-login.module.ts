@@ -11,6 +11,7 @@ import { CustomNumberPipe } from './../../pipes/custom-number.pipe';
 import { PopupComponent } from '../../pop-up/popup/popup.component';
 import { Sub1Component } from '../../academics/sub1/sub1.component';
 import { SchedSetupComponent } from '../../academics/Besogs/sched-setup/sched-setup.component';
+import { SectionMaintenanceComponent } from '../../academics/Besogs/section-maintenance/section-maintenance.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { SchedSetupComponent } from '../../academics/Besogs/sched-setup/sched-se
     CustomNumberPipe,
     PopupComponent,
     Sub1Component,
-    SchedSetupComponent
+    SchedSetupComponent,
+    SectionMaintenanceComponent
   ],
   entryComponents: [
   ],
