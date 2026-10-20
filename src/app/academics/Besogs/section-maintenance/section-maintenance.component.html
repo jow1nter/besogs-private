@@ -13,7 +13,7 @@
                 <mat-label>School year</mat-label>
                 <mat-select #yearSelect id="section-school-year" [value]="selectedYear"
                     (selectionChange)="onYearSelection($event.value, yearSelect)">
-                    <mat-option value="add-new">+ Add New School</mat-option>
+                    <mat-option value="add-new">+ Add New School Year</mat-option>
                     <mat-option *ngFor="let year of schoolYears" [value]="year">{{ year }}</mat-option>
                 </mat-select>
             </mat-form-field>
