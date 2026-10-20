@@ -62,6 +62,18 @@
           </a>
         </mat-expansion-panel>
 
+        <mat-expansion-panel style="display:inline;padding: 0">
+          <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'" style="padding-left: 7px;">
+            <mat-panel-title>
+              <i class="material-icons iconsize">calendar_today</i><b>BES Faculty Sched</b>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <a [routerLink]="['../main',{outlets:{div:'app-sub1'}}]" mat-button>
+            <i class="material-icons iconsize">cloud_upload</i> Sub 1
+          </a>
+        </mat-expansion-panel>
+
       </mat-expansion-panel>
 
       <mat-expansion-panel>
