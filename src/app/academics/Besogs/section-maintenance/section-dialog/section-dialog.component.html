@@ -1,0 +1,52 @@
+<form [formGroup]="sectionForm" class="section-dialog-form" (ngSubmit)="saveSection()">
+    <div class="section-dialog-heading">
+        <h2 id="section-dialog-title">{{ editingId === null ? 'Add Section' : 'Edit Section' }}</h2>
+        <button mat-icon-button type="button" aria-label="Close dialog" (click)="closeSectionDialog()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <!-- <p class="section-dialog-description">Manage sections for {{ selectedYear }}.</p> -->
+    <mat-dialog-content class="section-dialog-content">
+        <mat-form-field appearance="outline" class="grade-field x">
+            <mat-label>Year Level</mat-label>
+            <mat-select formControlName="grade">
+                <mat-option *ngFor="let grade of gradeLevels" [value]="grade">{{ grade }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div formArrayName="sections">
+        <div class="section-name-row" *ngFor="let row of sectionRows.controls; let i = index" [formGroupName]="i">
+            <mat-form-field *ngIf="isSeniorHigh" appearance="outline" class="cluster-field x">
+                <mat-label>Cluster</mat-label>
+                <input matInput required formControlName="cluster"
+                    [attr.aria-label]="'Cluster for section ' + (i + 1)"
+                    [attr.aria-describedby]="error ? 'section-dialog-error' : null">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="section-name-field x">
+                <mat-label>Section Name</mat-label>
+                <input matInput required formControlName="name"
+                    [attr.aria-label]="'Section name ' + (i + 1)"
+                    [attr.aria-describedby]="error ? 'section-dialog-error' : null">
+            </mat-form-field>
+            <mat-form-field *ngIf="!isSeniorHigh" appearance="outline" class="adviser-field x">
+                <mat-label>Adviser</mat-label>
+                <input matInput required formControlName="adviser"
+                    [attr.aria-label]="'Adviser for section ' + (i + 1)"
+                    [attr.aria-describedby]="error ? 'section-dialog-error' : null">
+            </mat-form-field>
+            <button *ngIf="editingId === null" mat-icon-button type="button" class="delete-section-button"
+                [attr.aria-label]="'Remove section ' + (i + 1)"
+                (click)="removeSectionRow(i)"><mat-icon>delete_outline</mat-icon></button>
+        </div>
+        </div>
+        <button *ngIf="editingId === null" mat-stroked-button type="button" class="add-section-row"
+            (click)="addSectionRow()">
+            <mat-icon>add</mat-icon> Add Section
+        </button>
+        <p *ngIf="error" id="section-dialog-error" class="error" role="alert">{{ error }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="section-dialog-actions">
+        <!-- <button mat-button type="button" (click)="closeSectionDialog()">Cancel</button> -->
+        <button mat-flat-button color="primary" type="submit" class="save-sections-button">{{ editingId === null ? 'Save Sections' :
+            'Save Changes' }}</button>
+    </mat-dialog-actions>
+</form>
