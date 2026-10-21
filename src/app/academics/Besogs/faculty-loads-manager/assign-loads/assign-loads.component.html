@@ -1,1 +1,31 @@
-<p>Assign loads component works!</p>
+<section aria-label="Employee lookup">
+  <div class="lookup-toolbar">
+    <div class="employee-lookup">
+    <input type="text" placeholder="Search employees..." aria-label="Search employees by name or ID"
+      [ngModel]="employeeQuery" (ngModelChange)="onQueryChange($event)"
+      [matAutocomplete]="employeeOptions" autocomplete="off">
+    <mat-icon *ngIf="!employeeQuery" class="search-icon" aria-hidden="true">search</mat-icon>
+    <button *ngIf="employeeQuery" mat-icon-button type="button"
+      aria-label="Clear selected employee and search" (click)="clearEmployee()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-autocomplete #employeeOptions="matAutocomplete" [displayWith]="displayEmployee">
+      <mat-option *ngFor="let employee of filteredEmployees" [value]="employee">
+        <span class="employee-name">{{ employee.name }}</span>
+        <small class="employee-detail">{{ employee.id }} · {{ employee.department }}</small>
+      </mat-option>
+      <mat-option *ngIf="!filteredEmployees.length" disabled>No employees found</mat-option>
+    </mat-autocomplete>
+    </div>
+  </div>
+
+  <div *ngIf="selectedEmployee" class="selected-employee" aria-live="polite">
+    <strong>{{ selectedEmployee.name }}</strong>
+    <span>{{ selectedEmployee.id }} · {{ selectedEmployee.department }}</span>
+  </div>
+
+  <div class="loads-layout">
+    <div class="loads-card"></div>
+    <div class="loads-card"></div>
+  </div>
+</section>
