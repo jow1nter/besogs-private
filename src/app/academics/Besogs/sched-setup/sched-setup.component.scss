@@ -15,15 +15,16 @@
 ::ng-deep .mat-card-content {
     padding: 5px !important;
 }
+
 :host {
     --bg: #ffffff;
-    --tint: #f3f6f1;
-    --tint-strong: #e6eee3;
+    --tint: #f3f6f8;
+    --tint-strong: #dbe1e7;
     --border: #e4e8e1;
     --text: #1f2a1f;
-    --muted: #6b7a6b;
+    --muted: #294a70;
     --faint: #9aa59a;
-    --green: #2f5d3a;
+    --blue: #294a70;
     --danger: #c0392b;
     display: block;
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -66,7 +67,7 @@
 
 .legend-line {
     width: 20px;
-    border-top: 2px solid var(--green);
+    border-top: 2px solid var(--blue);
 }
 
 .faint {
@@ -110,7 +111,7 @@
 }
 
 .tab.active .tab-title {
-    color: var(--green);
+    color: var(--blue);
 }
 
 .tab-meta {
@@ -156,7 +157,7 @@
     height: 34px;
     border-radius: 8px;
     background: var(--tint-strong);
-    color: var(--green);
+    color: var(--blue);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -182,13 +183,12 @@
 }
 
 .add-btn {
-    background: var(--tint-strong);
-    color: var(--green);
+    background: var(--blue);
+    color: #fff;
     border: none;
     border-radius: 8px;
     padding: 8px 14px;
     font-size: 0.85rem;
-    font-weight: 600;
     cursor: pointer;
 }
 
@@ -245,7 +245,7 @@
 }
 
 .link-btn:hover {
-    color: var(--green);
+    color: var(--blue);
 }
 
 .link-btn.danger:hover {
@@ -270,8 +270,8 @@
 }
 
 .btn-primary {
-    background: var(--green);
-    border-color: var(--green);
+    background: var(--blue);
+    border-color: var(--blue);
     color: #fff;
 }
 
@@ -358,4 +358,68 @@
     justify-content: flex-end;
     gap: 8px;
     margin-top: 18px;
+}
+
+.grade-body {
+    padding: 12px 16px;
+}
+
+.sec-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px 4px;
+    margin-bottom: 12px;
+}
+
+.sec-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.sec-fields {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.sec-select {
+    width: 200px;
+    font-size: 0.85rem;
+}
+
+::ng-deep .sec-select .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+.sec-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 40px 0;
+    font-size: 0.8rem;
+    color: var(--faint);
+}
+
+.break-tag {
+    width: 100px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+
+    // class period
+    color: var(--blue);
+    background-color: var(--tint-strong);
+
+    // break
+    &.is-break {
+        color: #9a5b00;
+        background-color: #fff3df;
+    }
 }

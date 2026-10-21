@@ -6,7 +6,7 @@
         </mat-card-title>
         <mat-card-subtitle>
             <p>
-                This page allows you to setup time for each grade.
+                This page allows you to setup time for each Grade Level and Section/Set.
             </p>
         </mat-card-subtitle>
 
@@ -29,7 +29,6 @@
                     <h2>{{ activeDepartment()?.name }}</h2>
                     <p class="faint">{{ activeDepartment()?.label }}</p>
                 </div>
-                <span class="faint">{{ gradesFor(activeDept).length }} grades</span>
             </div>
 
             <!-- Grade cards -->
@@ -38,25 +37,88 @@
                     <div class="badge">{{ g.badge }}</div>
                     <div class="grade-info">
                         <strong>{{ g.name }}</strong>
-                        <small>{{ g.blocks.length }} time blocks</small>
+                        <small>{{ sectionSummary(g) }}</small>
                     </div>
-                    <button class="add-btn" (click)="openAdd(g)">+ Add time</button>
+                    <button class="add-btn" (click)="addSection(g)">
+                        + Add {{ isShs(g) ? shownStrand(g) + ' set' : 'section' }}
+                    </button>
                 </div>
 
                 <div class="grade-body">
-                    <div class="time-row" *ngFor="let b of g.blocks; let i = index">
-                        <span class="row-no">{{ i + 1 }}</span>
-                        <div class="time-value">{{ formatTime(b.start) }}</div>
-                        <span class="to">to</span>
-                        <div class="time-value">{{ formatTime(b.end) }}</div>
-                        <span></span>
-                        <div class="row-actions">
-                            <button class="link-btn" (click)="openEdit(g, i)">Edit</button>
-                            <button class="link-btn danger" (click)="removeTime(g, i)">Remove</button>
-                        </div>
-                    </div>
 
-                    <p class="empty" *ngIf="!g.blocks.length">No time blocks yet.</p>
+                    <!-- One card per grade: pick a section (or strand + set) to show its times -->
+                    <div class="sec-card">
+                        <div class="sec-head">
+                            <div class="sec-fields">
+                                <mat-form-field appearance="outline" class="sec-select" *ngIf="isShs(g)">
+                                    <mat-label>Strand</mat-label>
+                                    <mat-select [ngModel]="shownStrand(g)" (ngModelChange)="selectStrand(g, $event)">
+                                        <mat-option *ngFor="let st of strands" [value]="st">{{ st }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="sec-select"
+                                    *ngIf="visibleSections(g).length">
+                                    <mat-label>{{ sectionLabel(g) }}</mat-label>
+                                    <mat-select [ngModel]="currentSection(g)"
+                                        (ngModelChange)="selectSection(g, $event)">
+                                        <mat-option *ngFor="let sec of visibleSections(g)" [value]="sec">{{ sec.name
+                                            }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <button class="link-btn danger" *ngIf="currentSection(g)"
+                                (click)="removeSection(g, currentSection(g))">
+                                Remove {{ sectionLabel(g) | lowercase }}
+                            </button> -->
+                        </div>
+
+                        <!-- Loader while switching section -->
+                        <div class="sec-loading" *ngIf="loading[g.badge]">
+                            <mat-spinner diameter="32"></mat-spinner>
+                            <span>Loading {{ sectionLabel(g) | lowercase }} schedule…</span>
+                        </div>
+
+                        <!-- Day tabs -->
+                        <mat-tab-group animationDuration="0ms" *ngIf="!loading[g.badge] && currentSection(g) as s">
+                            <mat-tab *ngFor="let d of days">
+
+                                <ng-template mat-tab-label>
+                                    {{ d.name }}
+                                </ng-template>
+
+                                <div class="day-body">
+                                    <div
+                                        style="width: 100%; display: flex; justify-content: flex-end;gap: 10px; margin-bottom: 10px; margin-top: 10px;">
+                                        <button class="add-btn" *ngIf="s.blocks[d.id].length"
+                                            (click)="copyToAllDays(s, d.id)">Copy to all days</button>
+                                        <button class="add-btn" (click)="openAdd(g, s, d.id)">+ Add time</button>
+                                    </div>
+                                    <div class="time-row" [class.break-row]="b.isBreak"
+                                        *ngFor="let b of s.blocks[d.id]; let i = index">
+                                        <span class="row-no"></span>
+                                        <div class="time-value">{{ formatTime(b.start) }}</div>
+                                        <span class="to">to</span>
+                                        <div class="time-value">{{ formatTime(b.end) }}</div>
+                                        <span class="break-tag" [class.is-break]="b.isBreak">{{ b.isBreak ? 'Break' :
+                                            'Class Period' }}</span>
+                                        <div class="row-actions">
+                                            <button class="link-btn" (click)="openEdit(g, s, d.id, i)">Edit</button>
+                                            <button class="link-btn danger"
+                                                (click)="removeTime(s, d.id, i)">Remove</button>
+                                        </div>
+                                    </div>
+
+                                    <p class="empty" *ngIf="!s.blocks[d.id].length">No time blocks for {{ d.name }} yet.
+                                    </p>
+                                </div>
+
+                            </mat-tab>
+                        </mat-tab-group>
+
+                        <p class="empty" *ngIf="!loading[g.badge] && !currentSection(g)">
+                            No {{ isShs(g) ? shownStrand(g) + ' sets' : 'sections' }} yet. Add one to set its schedule.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -66,31 +128,60 @@
 
 <!-- Modal -->
 <ng-template #modalTime>
-    <h2 mat-dialog-title>
-        {{ editIndex === -1 ? 'Add time' : 'Edit time' }}
-        <p class="faint">{{ grades[gradeIndex]?.name }}</p>
-    </h2>
 
-    <mat-dialog-content>
-        <div style="display: flex; align-items: center; gap: 12px;">
-            <mat-form-field appearance="outline" style="flex: 1; min-width: 0;">
-                <mat-label>Start</mat-label>
-                <input matInput type="time" [(ngModel)]="start" (ngModelChange)="error = ''">
-            </mat-form-field>
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div style="display: flex; width: 100%; align-items: center;">
 
-            <span style="padding-bottom: 1.3em;">to</span>
+                <div style="flex: 0 0 80%;margin-left: -10px;">
+                    <mat-card-title>
+                        <p><b> {{ editIndex === -1 ? 'Add' : 'Edit' }} {{ dayName(activeDay) }} time of
+                                {{ activeGrade?.name }} {{ sectionTitle(activeGrade, activeSection) }} </b>
+                        </p>
+                    </mat-card-title>
+                </div>
+                <div style="flex: 0 0 20%; display: flex; justify-content: flex-end;">
+                    <button mat-icon-button color="primary" (click)="closeModal()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-card-header>
 
-            <mat-form-field appearance="outline" style="flex: 1; min-width: 0;">
-                <mat-label>End</mat-label>
-                <input matInput type="time" [(ngModel)]="end" (ngModelChange)="error = ''">
-            </mat-form-field>
-        </div>
+        <mat-card-content class='colo'>
 
-        <p class="modal-error" *ngIf="error">{{ error }}</p>
-    </mat-dialog-content>
+            <div style="padding: 15px;">
+                <div style="width: 100%;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%;">
+                        <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+                            <span style="font-size: 12px; font-weight: 600; color: #6b7a6b;">Start</span>
+                            <input type="time" [(ngModel)]="start" (ngModelChange)="error = ''"
+                                style="width: 100%; height: 40px; padding: 0 10px; border: 1px solid #d0d7cc; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+                            <span style="font-size: 12px; font-weight: 600; color: #6b7a6b;">End</span>
+                            <input type="time" [(ngModel)]="end" (ngModelChange)="error = ''"
+                                style="width: 100%; height: 40px; padding: 0 10px; border: 1px solid #d0d7cc; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                        </div>
+                        <p class="modal-error" *ngIf="error">{{ error }}</p>
+                    </div>
 
-    <mat-dialog-actions align="end">
-        <button class="btn" (click)="closeModal()">Cancel</button>
-        <button class="btn btn-primary" (click)="saveTime()">Save</button>
-    </mat-dialog-actions>
+                    <div style="margin-top: 14px;">
+                        <mat-slide-toggle color="primary" [(ngModel)]="isBreak">
+                            Break time
+                        </mat-slide-toggle>
+                        <p style="margin: 4px 0 0; font-size: 12px; color: #6b7a6b;">
+                            Breaks show in the list but are not counted as class periods.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="width: 100%; display: flex; justify-content: flex-end; gap: 12px; margin-top: 15px;">
+                    <button mat-raised-button color="primary" (click)="saveTime()">Save</button>
+                </div>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+
 </ng-template>
