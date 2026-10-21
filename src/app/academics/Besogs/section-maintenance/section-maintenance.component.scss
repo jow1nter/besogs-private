@@ -119,15 +119,23 @@ input {
     margin-top: 20px;
 
     .mat-column-grade {
-        width: 25%;
+        width: 15%;
     }
 
     .mat-column-name {
-        width: 45%;
+        width: 25%;
+    }
+
+    .mat-column-cluster {
+        width: 15%;
+    }
+
+    .mat-column-adviser {
+        width: 25%;
     }
 
     .mat-column-actions {
-        width: 30%;
+        width: 20%;
     }
 
     th.mat-header-cell {

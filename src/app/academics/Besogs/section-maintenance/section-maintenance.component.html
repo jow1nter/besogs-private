@@ -53,6 +53,14 @@
                 <th mat-header-cell *matHeaderCellDef>Section name</th>
                 <td mat-cell *matCellDef="let section">{{ section.name }}</td>
             </ng-container>
+            <ng-container matColumnDef="cluster">
+                <th mat-header-cell *matHeaderCellDef>Cluster</th>
+                <td mat-cell *matCellDef="let section">{{ section.cluster || '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="adviser">
+                <th mat-header-cell *matHeaderCellDef>Adviser</th>
+                <td mat-cell *matCellDef="let section">{{ section.adviser || '—' }}</td>
+            </ng-container>
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef class="actions">Actions</th>
                 <td mat-cell *matCellDef="let section" class="actions">
