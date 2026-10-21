@@ -11,10 +11,10 @@
         <div class="year-toolbar">
             <mat-form-field appearance="outline" class="school-year-field x">
                 <mat-label>School year</mat-label>
-                <mat-select #yearSelect id="section-school-year" [value]="selectedYear"
+                <mat-select #yearSelect id="section-school-year" [value]="selectedYear" panelClass="section-school-year-panel"
                     (selectionChange)="onYearSelection($event.value, yearSelect)">
-                    <mat-option value="add-new">+ Add New School Year</mat-option>
                     <mat-option *ngFor="let year of schoolYears" [value]="year">{{ year }}</mat-option>
+                    <mat-option value="add-new" class="add-school-year-option">+ Add New School Year</mat-option>
                 </mat-select>
             </mat-form-field>
             <button mat-raised-button color="primary" type="button" (click)="openEditor()">+ Add section</button>
@@ -56,10 +56,10 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef class="actions">Actions</th>
                 <td mat-cell *matCellDef="let section" class="actions">
-                    <button mat-button color="primary" type="button" [attr.aria-label]="'Edit ' + section.name"
-                        (click)="openEditor(section)">Edit</button>
-                    <button mat-button color="warn" type="button" [attr.aria-label]="'Delete ' + section.name"
-                        (click)="requestDelete(section)">Delete</button>
+                    <button mat-icon-button class="section-action edit-action" type="button" [attr.aria-label]="'Edit ' + section.name"
+                        (click)="openEditor(section)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button class="section-action delete-action" type="button" [attr.aria-label]="'Delete ' + section.name"
+                        (click)="requestDelete(section)"><mat-icon>delete_outline</mat-icon></button>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

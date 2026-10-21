@@ -25,7 +25,7 @@
                 <input matInput [name]="'adviser' + i" [(ngModel)]="row.adviser"
                     [attr.aria-label]="'Adviser for section ' + (i + 1)">
             </mat-form-field>
-            <button *ngIf="editingId === null" mat-icon-button type="button"
+            <button *ngIf="editingId === null" mat-icon-button type="button" class="delete-section-button"
                 [attr.aria-label]="'Remove section ' + (i + 1)"
                 (click)="removeSectionRow(i)"><mat-icon>delete_outline</mat-icon></button>
         </div>

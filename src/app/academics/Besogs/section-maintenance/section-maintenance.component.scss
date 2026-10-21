@@ -78,6 +78,19 @@ input {
     max-width: 100%;
 }
 
+::ng-deep .section-school-year-panel .add-school-year-option {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    background: #fff;
+    border-top: 1px solid #f2f2f2;
+    box-shadow: none;
+
+    &:hover, &.mat-active, &:focus {
+        background: #f3f6f9;
+    }
+}
+
 :host ::ng-deep .x .mat-form-field-wrapper {
     padding-bottom: 0 !important;
 }
@@ -143,6 +156,60 @@ input {
     }
 }
 
+.section-action {
+    width: 44px;
+    height: 32px;
+    margin: 4px;
+    line-height: 30px;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    background: transparent;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+
+    &.edit-action { color: #294a70; }
+    &.delete-action { color: #e26363; }
+
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        line-height: 18px;
+    }
+
+    &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+
+    &:active { transform: scale(0.94); }
+}
+
+@media (hover: hover) {
+    .section-action:hover {
+        transform: translateY(-1px);
+
+        &.edit-action { background: #f0f5fb; border-color: #b5c9e0; }
+        &.delete-action { background: #fff3f3; border-color: #edb5b5; }
+        mat-icon { animation: section-action-wiggle 360ms ease-in-out; }
+        &:active { transform: scale(0.94); }
+    }
+}
+
+@keyframes section-action-wiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-12deg); }
+    75% { transform: rotate(12deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-action {
+        transition: none;
+
+        &:hover, &:active { transform: none; }
+        &:hover mat-icon { animation: none; }
+    }
+}
+
 .error {
     color: #ae3434;
 }
@@ -205,7 +272,7 @@ input {
 
     .actions button {
         display: block;
-        margin: 0 auto;
+        margin: 4px auto;
     }
 
     .edit-panel {
