@@ -68,15 +68,23 @@
               <i class="material-icons iconsize">calendar_today</i><b>BES Faculty Sched</b>
             </mat-panel-title>
           </mat-expansion-panel-header>
+          <mat-expansion-panel style="display:inline;padding: 0">
+            <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'" style="padding-left: 7px;">
+              <mat-panel-title>
+                <i class="material-icons iconsize">settings</i><b>Maintenance</b>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
-          <a [routerLink]="['../main',{outlets:{div:'sched-setup'}}]" mat-button>
-            <i class="material-icons iconsize">perm_contact_calendar</i> Schedule Setup
-          </a>
+            <a [routerLink]="['../main',{outlets:{div:'section-maintenance'}}]" mat-button>
+              <i class="material-icons iconsize">class</i> Section Maintenance
+            </a>
+
+            <a [routerLink]="['../main',{outlets:{div:'sched-setup'}}]" mat-button>
+              <i class="material-icons iconsize">perm_contact_calendar</i> Schedule Setup
+            </a>
+
+          </mat-expansion-panel>
         </mat-expansion-panel>
-
-        <a [routerLink]="['../main',{outlets:{div:'section-maintenance'}}]" mat-button>
-          <i class="material-icons iconsize">class</i> Section Maintenance
-        </a>
 
       </mat-expansion-panel>
 
