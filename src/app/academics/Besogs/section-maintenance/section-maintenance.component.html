@@ -1,0 +1,94 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            <p><b>Section Maintenance</b></p>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <p>Add, edit, delete, and view sections in the BES department for each school year.</p>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="section-content">
+        <div class="year-toolbar">
+            <mat-form-field appearance="outline" class="school-year-field x">
+                <mat-label>School year</mat-label>
+                <mat-select #yearSelect id="section-school-year" [value]="selectedYear" panelClass="section-school-year-panel"
+                    (selectionChange)="onYearSelection($event.value, yearSelect)">
+                    <mat-option *ngFor="let year of schoolYears" [value]="year">{{ year }}</mat-option>
+                    <mat-option value="add-new" class="add-school-year-option">+ Add New School Year</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="openEditor()">+ Add section</button>
+        </div>
+
+        <form *ngIf="yearEditorOpen" class="edit-panel" (ngSubmit)="saveSchoolYear()"
+            aria-labelledby="school-year-editor-title">
+            <h3 id="school-year-editor-title">Add school year</h3>
+            <label for="school-year-start">Starting year</label>
+            <input id="school-year-start" name="startingYear" type="number" min="2000" max="2100" step="1"
+                [(ngModel)]="draftStartYear" aria-describedby="school-year-hint">
+            <p id="school-year-hint" class="muted">The school year ends in the following year.</p>
+            <p *ngIf="error" class="error" role="alert">{{ error }}</p>
+            <div class="panel-actions">
+                <button mat-raised-button color="primary" type="submit">Add school year</button>
+                <button mat-button type="button" (click)="closePanel()">Cancel</button>
+            </div>
+        </form>
+
+
+
+        <!-- <div class="list-toolbar">
+            <div>
+                <h2>Sections · {{ selectedYear }}</h2>
+                <p class="muted">{{ sections.length }} {{ sections.length === 1 ? 'section' : 'sections' }}</p>
+            </div>
+        </div> -->
+
+        <table mat-table class="section-table" [dataSource]="sections" [trackBy]="trackSection"
+            *ngIf="sections.length; else emptySections">
+            <ng-container matColumnDef="grade">
+                <th mat-header-cell *matHeaderCellDef>Grade level</th>
+                <td mat-cell *matCellDef="let section">{{ section.grade }}</td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Section name</th>
+                <td mat-cell *matCellDef="let section">{{ section.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="cluster">
+                <th mat-header-cell *matHeaderCellDef>Cluster</th>
+                <td mat-cell *matCellDef="let section">{{ section.cluster || '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="adviser">
+                <th mat-header-cell *matHeaderCellDef>Adviser</th>
+                <td mat-cell *matCellDef="let section">{{ section.adviser || '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef class="actions">Actions</th>
+                <td mat-cell *matCellDef="let section" class="actions">
+                    <button mat-icon-button class="section-action edit-action" type="button" [attr.aria-label]="'Edit ' + section.name"
+                        (click)="openEditor(section)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button class="section-action delete-action" type="button" [attr.aria-label]="'Delete ' + section.name"
+                        (click)="requestDelete(section)"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <ng-template #emptySections>
+            <div class="empty-state">
+                <h3>No sections yet</h3>
+                <p class="muted">Add a section to get started for {{ selectedYear }}.</p>
+            </div>
+        </ng-template>
+
+        <section *ngIf="pendingDelete" class="edit-panel" aria-labelledby="section-delete-title">
+            <h3 id="section-delete-title">Delete {{ pendingDelete.name }}?</h3>
+            <p>This removes the {{ pendingDelete.grade }} section from {{ selectedYear }} only.</p>
+            <div class="panel-actions">
+                <button mat-raised-button color="warn" type="button" (click)="deleteSection()">Delete section</button>
+                <button mat-button type="button" (click)="closePanel()">Cancel</button>
+            </div>
+        </section>
+        <!-- <p class="status-message" role="status">{{ message }}</p> -->
+        <!-- <p class="muted demo-note">Sample data only. Changes reset when you reload or leave this page.</p> -->
+    </mat-card-content>
+</mat-card>

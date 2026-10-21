@@ -1,0 +1,188 @@
+ :host {
+     display: block;
+     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+ }
+
+ .grade-field {
+     width: 100%;
+     margin-bottom: 16px;
+ }
+
+ :host ::ng-deep .x .mat-form-field-wrapper {
+     padding-bottom: 0 !important;
+ }
+
+ .error {
+     color: #ae3434;
+     margin-top: 16px;
+ }
+
+ @media (pointer: coarse) {
+     button {
+         min-height: 44px;
+     }
+
+     input {
+         font-size: 16px;
+     }
+ }
+
+ ::ng-deep .bes-section-dialog .mat-dialog-container {
+     padding: 20px;
+     border-radius: 12px;
+     background: #fff;
+     color: #292929;
+ }
+
+ .section-dialog-heading {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+
+     h2 {
+         margin: 0;
+         font-size: 18px;
+         font-weight: 600;
+     }
+
+     button {
+         color: #777;
+     }
+
+     margin-bottom: 16px;
+ }
+
+ .section-dialog-description {
+     margin: 4px 0 24px;
+     color: #666;
+     font-size: 13px;
+ }
+
+ .section-dialog-content {
+     padding: 0 20px;
+     margin: 0 -20px;
+ }
+
+ .section-name-row {
+     display: flex;
+     align-items: center;
+     gap: 12px;
+     margin-bottom: 8px;
+
+     mat-form-field {
+         flex: 1;
+         min-width: 0;
+     }
+
+     .delete-section-button {
+         flex-shrink: 0;
+         width: 44px;
+         height: 32px;
+         line-height: 30px;
+         border: 1px solid #e2e2e2;
+         border-radius: 10px;
+         background: transparent;
+         color: #e26363;
+         transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+
+         mat-icon {
+             width: 18px;
+             height: 18px;
+             font-size: 18px;
+             line-height: 18px;
+         }
+
+         &:focus-visible {
+             outline: 2px solid #e26363;
+             outline-offset: 2px;
+         }
+
+         &:active {
+             transform: scale(0.94);
+         }
+     }
+ }
+
+ @media (hover: hover) {
+     .section-name-row .delete-section-button:hover {
+         background: #fff3f3;
+         border-color: #edb5b5;
+         transform: translateY(-1px);
+
+         mat-icon {
+             animation: delete-icon-wiggle 360ms ease-in-out;
+         }
+
+         &:active {
+             transform: scale(0.94);
+         }
+     }
+ }
+
+ @keyframes delete-icon-wiggle {
+
+     0%,
+     100% {
+         transform: rotate(0);
+     }
+
+     25% {
+         transform: rotate(-12deg);
+     }
+
+     75% {
+         transform: rotate(12deg);
+     }
+ }
+
+ @media (prefers-reduced-motion: reduce) {
+     .section-name-row .delete-section-button {
+         transition: none;
+
+         &:hover,
+         &:active {
+             transform: none;
+         }
+
+         &:hover mat-icon {
+             animation: none;
+         }
+     }
+ }
+
+ .add-section-row {
+     width: 100%;
+     border-color: #e2e2e2;
+     border-radius: 6px;
+     color: #666;
+
+     mat-icon {
+         font-size: 18px;
+     }
+ }
+
+ .section-dialog-actions {
+     margin: 16px 0 0;
+     padding: 0;
+     min-height: 40px;
+
+     .save-sections-button {
+         background: #294a70;
+         color: white;
+         border-radius: 6px;
+     }
+ }
+
+ @media (max-width: 480px) {
+     .section-name-row {
+         flex-wrap: wrap;
+
+         .section-name-field {
+             flex-basis: 100%;
+         }
+
+         .adviser-field {
+             flex-basis: 60%;
+         }
+     }
+ }
