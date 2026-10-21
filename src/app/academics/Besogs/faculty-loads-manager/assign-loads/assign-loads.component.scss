@@ -81,10 +81,10 @@ section {
 .employee-lookup {
   display: flex;
   align-items: center;
-  width: 280px;
+  width: 342px;
   max-width: 100%;
-  height: 36px;
-  padding: 0 8px 0 12px;
+  height: 44px;
+  padding: 0 12px 0 14px;
   box-sizing: border-box;
   border: 1px solid #e7eaf0;
   border-radius: 8px;
@@ -102,7 +102,8 @@ section {
     outline: none;
     background: transparent;
     font: inherit;
-    font-size: 12px;
+    font-size: 14px;
+    color: #303843;
   }
 
   .search-icon {
@@ -116,6 +117,8 @@ section {
     width: 28px;
     height: 28px;
     line-height: 28px;
+    color: #53677e;
+    mat-icon { width: 18px; height: 18px; font-size: 18px; }
   }
 }
 
@@ -124,9 +127,16 @@ section {
   line-height: 20px;
 }
 
+.employee-name {
+  color: #303843;
+  font-size: 16px;
+  font-weight: 500;
+}
+
 .employee-detail {
-  color: #606775;
-  font-size: 11px;
+  margin-top: 8px;
+  color: #89919c;
+  font-size: 13px;
 }
 
 .employee-empty-state {
@@ -157,7 +167,7 @@ section {
 }
 
 .employee-empty-illustration {
-  width: 220px;
+  width: 160px;
   max-width: 100%;
   height: auto;
 }

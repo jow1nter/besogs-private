@@ -1,15 +1,15 @@
 <section aria-label="Employee lookup">
   <div class="lookup-toolbar">
-    <div class="employee-lookup">
+    <div class="employee-lookup" matAutocompleteOrigin #employeeLookupOrigin="matAutocompleteOrigin">
       <input type="text" placeholder="Search employees..." aria-label="Search employees by name or ID"
         [ngModel]="employeeQuery" (ngModelChange)="onQueryChange($event)" [matAutocomplete]="employeeOptions"
-        autocomplete="off">
+        [matAutocompleteConnectedTo]="employeeLookupOrigin" autocomplete="off">
       <mat-icon *ngIf="!employeeQuery" class="search-icon" aria-hidden="true">search</mat-icon>
       <button *ngIf="employeeQuery" mat-icon-button type="button" aria-label="Clear selected employee and search"
         (click)="clearEmployee()">
         <mat-icon>close</mat-icon>
       </button>
-      <mat-autocomplete #employeeOptions="matAutocomplete" [displayWith]="displayEmployee">
+      <mat-autocomplete #employeeOptions="matAutocomplete" class="employee-search-panel" [displayWith]="displayEmployee">
         <mat-option *ngFor="let employee of filteredEmployees" [value]="employee">
           <span class="employee-name">{{ employee.name }}</span>
           <small class="employee-detail">{{ employee.id }} · {{ employee.department }}</small>
@@ -91,18 +91,15 @@
   </div>
   <ng-template #selectEmployee>
     <div class="employee-empty-state" role="status">
-      <svg class="employee-empty-illustration" viewBox="0 0 240 200" fill="none" aria-hidden="true" focusable="false">
-        <circle cx="120" cy="94" r="78" fill="#f0f2f4" />
-        <ellipse cx="120" cy="178" rx="76" ry="8" fill="#e9ecef" />
-        <rect x="66" y="37" width="118" height="132" rx="13" fill="#e2e6ea" transform="rotate(9 66 37)" />
-        <rect x="49" y="32" width="118" height="136" rx="13" fill="white" stroke="#e4e7eb" stroke-width="2" />
-        <rect x="88" y="24" width="40" height="16" rx="6" fill="#d0d6dd" />
-        <circle cx="108" cy="81" r="20" fill="#c5ccd4" />
-        <path d="M74 129c0-19 15-32 34-32s34 13 34 32" fill="#dce1e6" />
-        <rect x="85" y="141" width="46" height="5" rx="2.5" fill="#e3e7eb" />
-        <circle cx="165" cy="135" r="27" fill="#f8f9fa" stroke="#9aa6b3" stroke-width="7" />
-        <path d="m185 155 20 20" stroke="#9aa6b3" stroke-width="10" stroke-linecap="round" />
-        <path d="M33 68h10m-5-5v10m151-21h8m-4-4v8" stroke="#d5dbe1" stroke-width="3" stroke-linecap="round" />
+      <svg class="employee-empty-illustration" viewBox="0 0 160 144" fill="none" aria-hidden="true" focusable="false">
+        <circle cx="72" cy="65" r="54" fill="#f0f2f4" />
+        <rect x="32" y="26" width="80" height="92" rx="9" fill="white" stroke="#e4e7eb" />
+        <circle cx="72" cy="65" r="23" fill="#edf2f8" />
+        <circle cx="72" cy="58" r="7" fill="#9aabbd" />
+        <ellipse cx="72" cy="74" rx="13" ry="8" fill="#9aabbd" />
+        <rect x="56" y="100" width="32" height="4" rx="2" fill="#e3e7eb" />
+        <path d="m125 115 13 13" stroke="#9aa6b3" stroke-width="8" stroke-linecap="round" />
+        <circle cx="114" cy="103" r="15" fill="#f8f9fa" stroke="#9aa6b3" stroke-width="4" />
       </svg>
       <h2>Select an employee</h2>
       <p>Search for an employee to view<br class="empty-state-break"> and manage their teaching loads.</p>
