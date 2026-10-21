@@ -1,0 +1,73 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title><h2>Faculty Loads Manager</h2></mat-card-title>
+    <mat-card-subtitle>Manage teaching assignments and weekly teaching hours by school year.</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="muted">Loads are saved in this browser only.</p>
+    <p *ngIf="storageError" class="error" role="alert">{{ storageError }}</p>
+    <div class="toolbar">
+      <mat-form-field appearance="outline">
+        <mat-label>School year</mat-label>
+        <input matInput [(ngModel)]="selectedYear" placeholder="2026-2027">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="search">
+        <mat-label>Search faculty, subject, section, or department</mat-label>
+        <input matInput [(ngModel)]="search">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="button" (click)="openEditor()" [disabled]="!storageAvailable">Add faculty load</button>
+    </div>
+    <form *ngIf="editorOpen" class="editor" (ngSubmit)="save()">
+      <h3>Faculty load details</h3>
+      <div class="fields">
+        <mat-form-field appearance="outline"><mat-label>School year</mat-label>
+          <input matInput name="schoolYear" [(ngModel)]="draft.schoolYear" required pattern="[0-9]{4}-[0-9]{4}">
+        </mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Faculty name or ID</mat-label>
+          <input matInput name="faculty" [(ngModel)]="draft.faculty" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Department</mat-label>
+          <mat-select name="department" [(ngModel)]="draft.department" required>
+            <mat-option *ngFor="let department of departments" [value]="department">{{ department }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Subject</mat-label>
+          <input matInput name="subject" [(ngModel)]="draft.subject" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Grade and section</mat-label>
+          <input matInput name="section" [(ngModel)]="draft.section" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Weekly hours</mat-label>
+          <input matInput name="hours" type="number" [(ngModel)]="draft.hours" min="0.01" max="168" step="0.01" required>
+        </mat-form-field>
+      </div>
+      <p *ngIf="error" class="error" role="alert">{{ error }}</p>
+      <button mat-raised-button color="primary" type="submit">Save load</button>
+      <button mat-button type="button" (click)="editorOpen = false">Cancel</button>
+    </form>
+    <p class="summary" aria-live="polite">{{ facultyCount }} faculty · {{ visibleLoads.length }} assignments · {{ totalHours | number:'1.0-2' }} weekly hours <span class="muted">(current filters)</span></p>
+    <div class="table-scroll">
+      <table>
+        <caption class="muted">Teaching loads · {{ selectedYear }}</caption>
+        <thead><tr><th scope="col">Faculty</th><th scope="col">Department</th><th scope="col">Subject</th><th scope="col">Grade / Section</th><th scope="col">Hours / week</th><th scope="col">Actions</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let load of visibleLoads">
+            <td>{{ load.faculty }}</td><td>{{ load.department }}</td><td>{{ load.subject }}</td><td>{{ load.section }}</td><td>{{ load.hours | number:'1.0-2' }}</td>
+            <td>
+              <ng-container *ngIf="pendingDelete !== load.id">
+                <button mat-button color="primary" (click)="openEditor(load)" [disabled]="!storageAvailable" [attr.aria-label]="'Edit load for ' + load.faculty">Edit</button>
+                <button mat-button color="warn" (click)="pendingDelete = load.id" [disabled]="!storageAvailable" [attr.aria-label]="'Delete load for ' + load.faculty">Delete</button>
+              </ng-container>
+              <ng-container *ngIf="pendingDelete === load.id">
+                <span>Delete this load?</span>
+                <button mat-button color="warn" (click)="deleteLoad(load.id)">Confirm</button>
+                <button mat-button (click)="pendingDelete = null">Cancel</button>
+              </ng-container>
+            </td>
+          </tr>
+          <tr *ngIf="!visibleLoads.length"><td colspan="6" class="empty">No faculty loads match this school year and search. Add a load or adjust your filters.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

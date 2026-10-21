@@ -13,6 +13,7 @@ import { Sub1Component } from '../../academics/sub1/sub1.component';
 import { SchedSetupComponent } from '../../academics/Besogs/sched-setup/sched-setup.component';
 import { SectionMaintenanceComponent } from '../../academics/Besogs/section-maintenance/section-maintenance.component';
 import { SectionDialogComponent } from '../../academics/Besogs/section-maintenance/section-dialog/section-dialog.component';
+import { FacultyLoadsManagerComponent } from '../../academics/Besogs/faculty-loads-manager/faculty-loads-manager.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { SectionDialogComponent } from '../../academics/Besogs/section-maintenan
     Sub1Component,
     SchedSetupComponent,
     SectionMaintenanceComponent,
-    SectionDialogComponent
+    SectionDialogComponent,
+    FacultyLoadsManagerComponent
   ],
   entryComponents: [
     SectionDialogComponent

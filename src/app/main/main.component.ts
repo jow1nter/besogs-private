@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActiveConfigurationComponent } from './../control-panel/active-configuration/active-configuration.component';
 import Swal from 'sweetalert2';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const swal = Swal;
 
@@ -57,6 +58,12 @@ export class MainComponent implements OnInit {
   }
 
   checkdomainvalue = ''
+
+  openDialogchangepassword(): void {
+    this.dialog.open(ChangePasswordComponent, {
+      width: '500px', data: {}
+    });
+  }
 
   ngOnInit() {
 

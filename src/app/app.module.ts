@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
+import { ChangePasswordComponent } from './main/change-password/change-password.component';
 import { GlobalService } from './global.service';
 import { HttpModule } from '@angular/http';
 import { StorageServiceModule } from 'angular-webstorage-service';
@@ -47,9 +48,11 @@ import { ActiveConfigurationComponent } from './control-panel/active-configurati
     AppComponent,
     LoginComponent,
     MainComponent,
+    ChangePasswordComponent,
     ActiveConfigurationComponent
   ],
   entryComponents: [
+    ChangePasswordComponent,
     ActiveConfigurationComponent
    ],
 
