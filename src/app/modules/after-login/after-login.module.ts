@@ -14,6 +14,8 @@ import { SchedSetupComponent } from '../../academics/Besogs/sched-setup/sched-se
 import { SectionMaintenanceComponent } from '../../academics/Besogs/section-maintenance/section-maintenance.component';
 import { SectionDialogComponent } from '../../academics/Besogs/section-maintenance/section-dialog/section-dialog.component';
 import { FacultyLoadsManagerComponent } from '../../academics/Besogs/faculty-loads-manager/faculty-loads-manager.component';
+import { AssignLoadsComponent } from '../../academics/Besogs/faculty-loads-manager/assign-loads/assign-loads.component';
+import { MyFacultyComponent } from '../../academics/Besogs/faculty-loads-manager/my-faculty/my-faculty.component';
 
 @NgModule({
   imports: [
@@ -33,7 +35,9 @@ import { FacultyLoadsManagerComponent } from '../../academics/Besogs/faculty-loa
     SchedSetupComponent,
     SectionMaintenanceComponent,
     SectionDialogComponent,
-    FacultyLoadsManagerComponent
+    FacultyLoadsManagerComponent,
+    AssignLoadsComponent,
+    MyFacultyComponent
   ],
   entryComponents: [
     SectionDialogComponent
