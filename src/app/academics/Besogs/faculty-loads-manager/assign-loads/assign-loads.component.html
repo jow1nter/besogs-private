@@ -1,31 +1,137 @@
 <section aria-label="Employee lookup">
   <div class="lookup-toolbar">
     <div class="employee-lookup">
-    <input type="text" placeholder="Search employees..." aria-label="Search employees by name or ID"
-      [ngModel]="employeeQuery" (ngModelChange)="onQueryChange($event)"
-      [matAutocomplete]="employeeOptions" autocomplete="off">
-    <mat-icon *ngIf="!employeeQuery" class="search-icon" aria-hidden="true">search</mat-icon>
-    <button *ngIf="employeeQuery" mat-icon-button type="button"
-      aria-label="Clear selected employee and search" (click)="clearEmployee()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <mat-autocomplete #employeeOptions="matAutocomplete" [displayWith]="displayEmployee">
-      <mat-option *ngFor="let employee of filteredEmployees" [value]="employee">
-        <span class="employee-name">{{ employee.name }}</span>
-        <small class="employee-detail">{{ employee.id }} · {{ employee.department }}</small>
-      </mat-option>
-      <mat-option *ngIf="!filteredEmployees.length" disabled>No employees found</mat-option>
-    </mat-autocomplete>
+      <input type="text" placeholder="Search employees..." aria-label="Search employees by name or ID"
+        [ngModel]="employeeQuery" (ngModelChange)="onQueryChange($event)" [matAutocomplete]="employeeOptions"
+        autocomplete="off">
+      <mat-icon *ngIf="!employeeQuery" class="search-icon" aria-hidden="true">search</mat-icon>
+      <button *ngIf="employeeQuery" mat-icon-button type="button" aria-label="Clear selected employee and search"
+        (click)="clearEmployee()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-autocomplete #employeeOptions="matAutocomplete" [displayWith]="displayEmployee">
+        <mat-option *ngFor="let employee of filteredEmployees" [value]="employee">
+          <span class="employee-name">{{ employee.name }}</span>
+          <small class="employee-detail">{{ employee.id }} · {{ employee.department }}</small>
+        </mat-option>
+        <mat-option *ngIf="!filteredEmployees.length" disabled>No employees found</mat-option>
+      </mat-autocomplete>
     </div>
   </div>
 
-  <div *ngIf="selectedEmployee" class="selected-employee" aria-live="polite">
-    <strong>{{ selectedEmployee.name }}</strong>
-    <span>{{ selectedEmployee.id }} · {{ selectedEmployee.department }}</span>
+  <div *ngIf="selectedEmployee; else selectEmployee" class="loads-layout">
+    <article class="loads-card employee-profile" *ngIf="employeeProfile as profile" aria-label="Employee profile">
+      <div class="profile-cover" aria-hidden="true"></div>
+      <div class="profile-summary">
+        <div class="profile-avatar" role="img" aria-label="Employee avatar">
+          <svg viewBox="0 0 80 80" fill="none" aria-hidden="true" focusable="false">
+            <circle cx="40" cy="29" r="12" fill="#9aabbd" />
+            <path d="M18 65c0-13 10-21 22-21s22 8 22 21" fill="#9aabbd" />
+          </svg>
+        </div>
+        <div class="profile-badges"><span>{{ selectedEmployee.id }}</span><span class="active-badge">Active</span></div>
+        <h2>{{ selectedEmployee.name }}</h2>
+        <p>{{ profile.position }} · {{ selectedEmployee.department }}</p>
+        <small>Joined {{ profile.joined }}</small>
+      </div>
+      <div class="profile-section">
+        <h3>Contact</h3>
+        <div class="profile-detail"><mat-icon aria-hidden="true">mail_outline</mat-icon><div><span>Email</span><p>{{ profile.email }}</p></div></div>
+        <div class="profile-detail"><mat-icon aria-hidden="true">phone</mat-icon><div><span>Phone number</span><p>{{ profile.phone }}</p></div></div>
+        <div class="profile-detail"><mat-icon aria-hidden="true">location_on</mat-icon><div><span>Address</span><p>{{ profile.address }}</p></div></div>
+      </div>
+      <div class="profile-section">
+        <h3>Employment</h3>
+        <div class="profile-detail"><mat-icon aria-hidden="true">school</mat-icon><div><span>Department</span><p>{{ selectedEmployee.department }}</p></div></div>
+        <div class="profile-detail"><mat-icon aria-hidden="true">work_outline</mat-icon><div><span>Employment type</span><p>{{ profile.employment }}</p></div></div>
+        <div class="profile-detail"><mat-icon aria-hidden="true">business</mat-icon><div><span>Office</span><p>{{ profile.office }}</p></div></div>
+      </div>
+      <p class="profile-demo-label">Sample employee profile</p>
+    </article>
+    <article class="loads-card teaching-loads" aria-labelledby="teaching-loads-heading">
+      <header class="loads-header">
+        <div>
+          <h2 id="teaching-loads-heading">Teaching loads</h2>
+          <p>Assigned subjects and sections</p>
+        </div>
+        <div class="loads-actions">
+          <span class="loads-count">{{ employeeLoads.length }} {{ employeeLoads.length === 1 ? 'load' : 'loads' }}</span>
+          <button class="add-load-button" type="button" aria-label="Add teaching load" (click)="openAddPanel(addLoadPanel)">
+            <mat-icon aria-hidden="true">add</mat-icon>
+            <span>Add</span>
+          </button>
+        </div>
+      </header>
+      <div class="loads-list-scroll" *ngIf="employeeLoads.length; else noLoads" tabindex="0" role="region" aria-label="Assigned teaching loads">
+        <ul class="loads-list">
+          <li class="load-list-item" *ngFor="let load of employeeLoads; let i = index">
+            <div class="load-row">
+            <div class="load-subject">
+              <div class="subject-thumbnail" aria-hidden="true">
+                <mat-icon>{{ i % 2 === 0 ? 'menu_book' : 'school' }}</mat-icon>
+              </div>
+              <div class="subject-copy">
+                <h3>{{ load.subjectTitle }}</h3>
+                <span class="subject-code">{{ load.subjectId }}</span>
+              </div>
+            </div>
+            <div class="load-section"><span class="load-label">Section</span><p>{{ load.section }}</p></div>
+            <div class="load-hours"><span class="load-label">Units/Hrs</span><p>{{ load.unitsHours }}</p></div>
+            </div>
+            <button type="button" class="delete-load-button" [attr.aria-label]="'Delete ' + load.subjectTitle + ' from ' + load.section"
+              (click)="deleteLoad(load); $event.stopPropagation()">
+              <mat-icon aria-hidden="true">delete_outline</mat-icon>
+            </button>
+          </li>
+        </ul>
+        <div class="loads-total"><span>Total Units/Hrs</span><strong>{{ totalUnitsHours }}</strong></div>
+      </div>
+      <ng-template #noLoads><p class="no-loads" role="status">No teaching loads assigned yet.</p></ng-template>
+    </article>
   </div>
-
-  <div class="loads-layout">
-    <div class="loads-card"></div>
-    <div class="loads-card"></div>
-  </div>
+  <ng-template #selectEmployee>
+    <div class="employee-empty-state" role="status">
+      <svg class="employee-empty-illustration" viewBox="0 0 240 200" fill="none" aria-hidden="true" focusable="false">
+        <circle cx="120" cy="94" r="78" fill="#f0f2f4" />
+        <ellipse cx="120" cy="178" rx="76" ry="8" fill="#e9ecef" />
+        <rect x="66" y="37" width="118" height="132" rx="13" fill="#e2e6ea" transform="rotate(9 66 37)" />
+        <rect x="49" y="32" width="118" height="136" rx="13" fill="white" stroke="#e4e7eb" stroke-width="2" />
+        <rect x="88" y="24" width="40" height="16" rx="6" fill="#d0d6dd" />
+        <circle cx="108" cy="81" r="20" fill="#c5ccd4" />
+        <path d="M74 129c0-19 15-32 34-32s34 13 34 32" fill="#dce1e6" />
+        <rect x="85" y="141" width="46" height="5" rx="2.5" fill="#e3e7eb" />
+        <circle cx="165" cy="135" r="27" fill="#f8f9fa" stroke="#9aa6b3" stroke-width="7" />
+        <path d="m185 155 20 20" stroke="#9aa6b3" stroke-width="10" stroke-linecap="round" />
+        <path d="M33 68h10m-5-5v10m151-21h8m-4-4v8" stroke="#d5dbe1" stroke-width="3" stroke-linecap="round" />
+      </svg>
+      <h2>Select an employee</h2>
+      <p>Search for an employee to view<br class="empty-state-break"> and manage their teaching loads.</p>
+    </div>
+  </ng-template>
 </section>
+
+<ng-template #addLoadPanel>
+  <form class="add-load-panel" (ngSubmit)="addLoad()">
+    <header class="add-panel-header">
+      <div><h2 id="add-load-heading">Add teaching load</h2><p>{{ selectedEmployee?.name }}</p></div>
+      <button type="button" mat-icon-button aria-label="Close add teaching load panel" (click)="closeAddPanel()"><mat-icon>close</mat-icon></button>
+    </header>
+    <div class="add-panel-body">
+      <p class="add-panel-description" id="subject-selection-label">Select subjects to add.</p>
+      <div class="subject-options" role="group" aria-labelledby="subject-selection-label">
+        <mat-checkbox *ngFor="let subject of availableSubjects" class="subject-option" color="primary"
+          [class.subject-option-selected]="selectedSubjects.indexOf(subject) !== -1"
+          [checked]="selectedSubjects.indexOf(subject) !== -1" (change)="toggleSubject(subject, $event.checked)">
+          <span class="subject-option-title">{{ subject.subjectTitle }}</span>
+          <span class="subject-option-id">{{ subject.subjectId }}</span>
+          <span class="subject-option-details">{{ subject.section }} · {{ subject.unitsHours }} Units/Hrs</span>
+        </mat-checkbox>
+      </div>
+      <p class="add-panel-description" *ngIf="!availableSubjects.length">All available subjects have been added.</p>
+    </div>
+    <footer class="add-panel-footer">
+      <button type="button" class="cancel-load-button" (click)="closeAddPanel()">Cancel</button>
+      <button type="submit" class="add-load-button" [disabled]="!canAddLoad">Add subjects{{ selectedSubjects.length ? ' (' + selectedSubjects.length + ')' : '' }}</button>
+    </footer>
+  </form>
+</ng-template>
